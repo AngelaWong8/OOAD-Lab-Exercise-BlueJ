@@ -1,33 +1,24 @@
+public class User {
+    protected String userId;
+    protected String name;
+    protected String email;
 
-/**
- * Write a description of class User here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
-public class User
-{
-    // instance variables - replace the example below with your own
-    private int x;
+    public User() {}
 
-    /**
-     * Constructor for objects of class User
-     */
-    public User()
-    {
-        // initialise instance variables
-        x = 0;
+    public User(String userId, String name, String email) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    public boolean login() {
+        return true;
+    }
+
+    public void logout() {
+    }
+
+    public String getName() {
+        return name;
     }
 }
