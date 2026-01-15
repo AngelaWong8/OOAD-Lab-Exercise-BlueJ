@@ -1,33 +1,35 @@
+import java.util.Date;
+import java.util.List;
 
-/**
- * Write a description of class Report here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
-public class Report
-{
-    // instance variables - replace the example below with your own
-    private int x;
+public class Report {
+    private String reportId;
+    private String reportType;
+    private Date generateDate;
+    private List<Evaluation> evaluations;
+    private List<Award> awards;
 
-    /**
-     * Constructor for objects of class Report
-     */
-    public Report()
-    {
-        // initialise instance variables
-        x = 0;
+    public Report(String reportId, String reportType,
+                  List<Evaluation> evaluations, List<Award> awards) {
+        this.reportId = reportId;
+        this.reportType = reportType;
+        this.evaluations = evaluations;
+        this.awards = awards;
+        this.generateDate = new Date();
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    public String generate() {
+        String result = "=== SEMINAR REPORT ===\n\n";
+        for (Evaluation e : evaluations) {
+            result += e.getStudent().getName()
+                    + " | Score: " + e.calculateTotalScore() + "\n";
+        }
+        return result;
+    }
+
+    public void exportPDF() {
+    }
+
+    public List<Award> getAwards() {
+        return awards;
     }
 }
