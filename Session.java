@@ -1,33 +1,15 @@
+import java.util.Date;
 
-/**
- * Write a description of class Session here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
-public class Session
-{
-    // instance variables - replace the example below with your own
-    private int x;
+public class Session {
+    private String sessionID;
+    private Date date;
+    private String venue;
+    private String sessionType;
 
-    /**
-     * Constructor for objects of class Session
-     */
-    public Session()
-    {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    public Session(String sessionID, Date date, String venue, String sessionType) {
+        this.sessionID = sessionID;
+        this.date = date;
+        this.venue = venue;
+        this.sessionType = sessionType;
     }
 }
