@@ -28,4 +28,16 @@ public class Evaluation {
     public Student getStudent() {
         return student;
     }
+    
+    public String getRubricType() {
+        return rubricType;
+    }
+    
+    public String getComments() {
+        return comment;
+    }
+    
+    public int getScore() {
+        return score;
+    }
 }
