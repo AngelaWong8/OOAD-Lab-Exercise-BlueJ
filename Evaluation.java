@@ -15,6 +15,14 @@ public class Evaluation {
     }
 
     public void recordEvaluation() {
+        System.out.println("----- EVALUATION RECORDED -----");
+        System.out.println("ID: " + evaluationId);
+        System.out.println("Student Name: " + student.getName()); // Inherited from User
+        System.out.println("Research Title: " + student.getPresentationType()); 
+        System.out.println("Rubric: " + rubricType);
+        System.out.println("Final Score: " + calculateTotalScore());
+        System.out.println("Evaluator Comment: " + comment);
+        System.out.println("-------------------------------");
     }
 
     public void addComment(String comment) {
