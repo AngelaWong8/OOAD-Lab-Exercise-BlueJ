@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class StudentGUI extends JFrame {
 
@@ -19,34 +20,65 @@ public class StudentGUI extends JFrame {
         add(btnUpload);
         add(btnViewAward);
 
-        btnRegister.addActionListener(e ->
-                JOptionPane.showMessageDialog(this,
-                        "Registration submitted (demo)"));
+        btnRegister.addActionListener(e -> {
+            Student student = new Student("S001", "Demo Student", "demo@student.edu",
+                                         "AI Research Project", "Research abstract here...", "Oral");
+            student.register();
+            JOptionPane.showMessageDialog(this,
+                    "Registration submitted successfully!\n" +
+                    "Student: " + student.getName() + "\n" +
+                    "Research: " + student.getResearchTitle());
+        });
 
-        //IMPLEMENTING UPLOAD LOGIC
         btnUpload.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Select Presentation File");
             int result = fileChooser.showOpenDialog(this);
 
             if (result == JFileChooser.APPROVE_OPTION) {
-                String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-                
-                // For demo purposes, we create a temporary student instance
-                // In a real app, you'd use the logged-in student's object
-                Student currentStudent = new Student("S-001", "Varya", "varya@univ.edu", 
-                                                    "AI Research", "Abstract...", "Oral");
+                File selectedFile = fileChooser.getSelectedFile();
+                String filePath = selectedFile.getAbsolutePath();
 
-                boolean success = currentStudent.submitPresentation(filePath);
+                String[] options = {"Oral", "Poster"};
+                String presentationType = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Select presentation type:",
+                    "Presentation Type",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+                );
                 
-                if (success) {
-                    JOptionPane.showMessageDialog(this, "File Uploaded Successfully!\nPath: " + filePath);
+                if (presentationType != null) {
+
+                    Student currentStudent = new Student("S001", "Demo Student", "demo@student.edu",
+                                                        "AI Research", "Abstract...", presentationType);
+                    
+                    currentStudent.uploadPresentation(filePath, presentationType);
+                    
+                    JOptionPane.showMessageDialog(this, 
+                        "File Uploaded Successfully!\n" +
+                        "File: " + selectedFile.getName() + "\n" +
+                        "Type: " + presentationType + "\n" +
+                        "Size: " + (selectedFile.length() / 1024) + " KB");
                 }
             }
         });
 
-        btnViewAward.addActionListener(e ->
-                JOptionPane.showMessageDialog(this,
-                        "Award result will be shown by Coordinator"));
+        btnViewAward.addActionListener(e -> {
+
+            Student student = new Student("S001", "Demo Student", "demo@student.edu",
+                                         "AI Research", "Abstract...", "Oral");
+            String notification = student.receiveAwardNotification();
+            
+            JOptionPane.showMessageDialog(this,
+                    notification + "\n\n" +
+                    "Award results:\n" +
+                    "• Best Oral Presentation: Pending\n" +
+                    "• Best Poster: Pending\n" +
+                    "• People's Choice: Pending\n\n" +
+                    "Awards will be announced after evaluation.");
+        });
     }
 }
