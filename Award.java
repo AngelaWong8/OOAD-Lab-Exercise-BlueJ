@@ -156,4 +156,33 @@ public class Award {
                awardName.equals(BEST_POSTER) || 
                awardName.equals(PEOPLES_CHOICE);
     }
+
+    public int getNomineeCount() {
+        return nominees.size();
+    }
+    
+    public Map<Student, Integer> getVotingResults() {
+        Map<Student, Integer> results = new HashMap<>();
+        
+        if (nominees.isEmpty()) return results;
+        
+        // Count votes for each nominee
+        Map<Integer, Integer> voteCount = new HashMap<>();
+        for (Integer nomineeIndex : votes.values()) {
+            voteCount.put(nomineeIndex, voteCount.getOrDefault(nomineeIndex, 0) + 1);
+        }
+        
+        // Convert to Student -> Vote count
+        for (Map.Entry<Integer, Integer> entry : voteCount.entrySet()) {
+            if (entry.getKey() >= 0 && entry.getKey() < nominees.size()) {
+                results.put(nominees.get(entry.getKey()), entry.getValue());
+            }
+        }
+        
+        return results;
+    }
+    
+    public void removeNominee(Student student) {
+        nominees.remove(student);
+    }
 }
