@@ -18,7 +18,7 @@ public class Coordinator extends User {
         awards.add(new Award("AWD-003", Award.PEOPLES_CHOICE, "Most votes from audience"));
     }
     
-    // ✓ Creates and manages seminar sessions
+    // Creates and manages seminar sessions
     public Session createSession(String sessionId, Date date, String venue, String sessionType) {
         Session newSession = new Session(sessionId, date, venue, sessionType);
         managedSessions.add(newSession);
@@ -29,7 +29,7 @@ public class Coordinator extends User {
         return managedSessions;
     }
     
-    // Placeholder for: ✓ Assigns evaluators and presenters to sessions
+    // Placeholder for: Assigns evaluators and presenters to sessions
     public boolean assignEvaluatorToSession(String sessionId, Object evaluator) {
         return true; // Placeholder - returns true for requirement
     }
@@ -38,7 +38,7 @@ public class Coordinator extends User {
         return true; // Placeholder - returns true for requirement
     }
     
-    // ✓ Generates seminar schedules
+    // Generates seminar schedules
     public String generateSchedule() {
         StringBuilder schedule = new StringBuilder();
         schedule.append("=== SEMINAR SCHEDULE ===\n");
@@ -56,7 +56,7 @@ public class Coordinator extends User {
         return schedule.toString();
     }
     
-    // ✓ Generates final evaluation reports (placeholder)
+    // Generates final evaluation reports (placeholder)
     public String generateEvaluationReport() {
         return "=== FINAL EVALUATION REPORT ===\n" +
                "Coordinator: " + getName() + "\n" +
@@ -65,7 +65,7 @@ public class Coordinator extends User {
                "Details: Would compile all evaluation data";
     }
     
-    // ✓ Oversees award nomination and management
+    // Oversees award nomination and management
     public Award createAward(String awardName, String criteria) {
         String awardId = "AWD-" + (awards.size() + 1);
         Award award = new Award(awardId, awardName, criteria);
