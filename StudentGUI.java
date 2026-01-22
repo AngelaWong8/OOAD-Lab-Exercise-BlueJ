@@ -30,7 +30,7 @@ public class StudentGUI extends JFrame {
                     "Research: " + student.getResearchTitle());
         });
 
-        btnUpload.addActionListener(e -> {
+        /**btnUpload.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Select Presentation File");
             int result = fileChooser.showOpenDialog(this);
@@ -65,6 +65,32 @@ public class StudentGUI extends JFrame {
                 }
             }
         });
+        */
+
+        //new code:
+        btnUpload.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Select Presentation File (Slides or Poster PDF)");
+            int result = fileChooser.showOpenDialog(this);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                String filePath = selectedFile.getAbsolutePath();
+
+                // Logic: Update the demo student's file path
+                Student currentStudent = new Student("S001", "Demo Student", "demo@student.edu",
+                                                    "AI Research", "Abstract...", "Poster");
+                currentStudent.uploadPresentation(filePath, "Poster");
+
+                // Visual confirmation of the submission
+                String msg = "Submission Received!\n" +
+                             "File: " + selectedFile.getName() + "\n" +
+                             "Path: " + filePath + "\n\n" +
+                             "Your materials have been sent to evaluators.";
+                
+                JOptionPane.showMessageDialog(this, msg, "Upload Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });        
 
         btnViewAward.addActionListener(e -> {
 
