@@ -6,7 +6,8 @@ public class Student extends User {
     private String presentationType;
     private String presentationFilePath;
     private boolean registered;
-
+    private String boardID; // New field for Poster Management
+    
     public Student(String userId, String name, String email, 
                    String researchTitle, String abstractText, String presentationType) {
         super(userId, name, email);
@@ -17,6 +18,7 @@ public class Student extends User {
         this.presentationType = presentationType;
         this.presentationFilePath = "";
         this.registered = false;
+        this.boardID = "N/A"; //constructors
     }
 
     public Student(String userId, String name, String email, String studentId,
@@ -38,6 +40,9 @@ public class Student extends User {
     public String getPresentationType() { return presentationType; }
     public String getPresentationFilePath() { return presentationFilePath; }
     public boolean isRegistered() { return registered; }
+    public String getBoardID() { return boardID; }
+    
+
 
     public void setSupervisor(String supervisor) { this.supervisor = supervisor; }
     public void setResearchTitle(String researchTitle) { this.researchTitle = researchTitle; }
@@ -45,6 +50,7 @@ public class Student extends User {
     public void setPresentationType(String presentationType) { this.presentationType = presentationType; }
     public void setRegistered(boolean registered) { this.registered = registered; }
     public void setPresentationFilePath(String filePath) { this.presentationFilePath = filePath; }
+    public void setBoardID(String boardID) { this.boardID = boardID; }
 
     public boolean submitPresentation() {
         if (presentationFilePath.isEmpty()) {
