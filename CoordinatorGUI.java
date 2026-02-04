@@ -38,6 +38,7 @@ public class CoordinatorGUI extends JFrame {
         JButton generateReportBtn = new JButton("📊 Generate Final Report");
         JButton showAnalyticsBtn = new JButton("📈 View Analytics");
         JButton exportReportsBtn = new JButton("📤 Export Reports");
+        JButton managePostersBtn = new JButton("📌 Manage Poster Boards");
         JButton profileBtn = new JButton("👤 Profile");
         JButton logoutBtn = new JButton("🚪 Logout");
         
@@ -49,6 +50,7 @@ public class CoordinatorGUI extends JFrame {
         generateReportBtn.addActionListener(e -> generateFinalReport());
         showAnalyticsBtn.addActionListener(e -> showAnalytics());
         exportReportsBtn.addActionListener(e -> exportReports());
+        managePostersBtn.addActionListener(e -> managePosterBoards());
         profileBtn.addActionListener(e -> showProfile());
         logoutBtn.addActionListener(e -> dispose());
         
@@ -60,6 +62,7 @@ public class CoordinatorGUI extends JFrame {
         actionPanel.add(generateReportBtn);
         actionPanel.add(showAnalyticsBtn);
         actionPanel.add(exportReportsBtn);
+        actionPanel.add(managePostersBtn);
         actionPanel.add(profileBtn);
         actionPanel.add(logoutBtn);
         
@@ -479,6 +482,41 @@ public class CoordinatorGUI extends JFrame {
                 break;
         }
     }
+    
+    private void managePosterBoards() {
+    Student s2 = new Student("S2", "Bob", "bob@uni.edu", "ML Research", "Abstract...", "Poster");
+    
+    if (!s2.getPresentationType().equalsIgnoreCase("Poster")) {
+        JOptionPane.showMessageDialog(this, "No Poster Presenters found.");
+        return;
+    }
+
+    String input = JOptionPane.showInputDialog(this, 
+        "Assign Board ID for " + s2.getName() + " (Format: B-###):", 
+        s2.getBoardID().equals("N/A") ? "B-001" : s2.getBoardID());
+
+    if (input != null && !input.trim().isEmpty()) {
+        if (input.matches("B-\\d+")) { 
+            s2.setBoardID(input);
+            
+            String summary = "--- POSTER MANAGEMENT SUMMARY ---\n" +
+                             "Presenter: " + s2.getName() + "\n" +
+                             "Topic: " + s2.getResearchTitle() + "\n" +
+                             "Assigned Board: " + s2.getBoardID() + "\n" +
+                             "Criteria: Visuals, Methodology, Q&A Performance\n" +
+                             "---------------------------------";
+            
+            outputArea.setText(summary);
+            outputArea.append("\n[Management] Board " + input + " officially assigned to " + s2.getName());
+            JOptionPane.showMessageDialog(this, "Board ID Assigned Successfully!");
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Invalid Format! Please use 'B-' followed by numbers (e.g., B-001).", 
+                "Format Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
     
     private void exportReportToFile(String reportContent) {
         JFileChooser fileChooser = new JFileChooser();
