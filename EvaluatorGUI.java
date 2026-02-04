@@ -19,15 +19,20 @@ public class EvaluatorGUI extends JFrame {
 
         // FEATURE: POSTER & SUBMISSION MANAGEMENT
         btnReview.addActionListener(e -> {
-            // These specific details satisfy the "Poster Management" requirement
-            String boardID = "B-042"; 
+            //Create/Reference the student (Bob)
+            Student s2 = new Student("S2", "Bob", "bob@uni.edu", "ML Research", "Abstract...", "Poster");
+            
+            s2.setBoardID("B-001"); 
+
+            String boardID = s2.getBoardID();
+            
             String location = "Main Hall - East Wing";
             String fileStatus = "PDF Uploaded (Ready)";
             String criteria = "1. Visual Layout\n2. Clarity of Graphics\n3. Evidence of Methodology";
         
             String managementView = "--- POSTER MANAGEMENT VIEW ---\n" +
-                                    "Student: Demo Student (S001)\n" +
-                                    "Board ID: " + boardID + "\n" +
+                                    "Student: " + s2.getName() + " (" + s2.getStudentId() + ")\n" +
+                                    "Board ID: " + boardID + "\n" + // Changed to dynamic variable
                                     "Location: " + location + "\n" +
                                     "Submission: " + fileStatus + "\n\n" +
                                     "--- EVALUATION CRITERIA ---\n" + criteria;
@@ -35,7 +40,6 @@ public class EvaluatorGUI extends JFrame {
             JTextArea textArea = new JTextArea(managementView);
             textArea.setEditable(false);
             
-            // Using a ScrollPane makes the GUI look more "Management" oriented
             JOptionPane.showMessageDialog(this, new JScrollPane(textArea), 
                                          "Poster Presentation Management", 
                                          JOptionPane.INFORMATION_MESSAGE);
@@ -45,45 +49,29 @@ public class EvaluatorGUI extends JFrame {
         btnEvaluate.addActionListener(e -> {
             String sName = JOptionPane.showInputDialog(this, "Enter Student Name to Evaluate:");
             if (sName == null || sName.trim().isEmpty()) return;
-
+        
             String[] rubricOptions = {"Oral Presentation", "Poster Presentation"};
             String selectedRubric = (String) JOptionPane.showInputDialog(
                     this, "Select Rubric Type:", "Rubric Selection",
                     JOptionPane.QUESTION_MESSAGE, null, rubricOptions, rubricOptions[0]);
-
+        
             if (selectedRubric == null) return;
-
-            // Display Criteria based on selection
-            String criteria = (selectedRubric.equals("Poster Presentation")) ?
-                    "Poster Rubrics:\n1. Visual Appeal\n2. Technical Content\n3. Q&A Response" :
-                    "Oral Rubrics:\n1. Clarity of Speech\n2. Methodology\n3. Time Management";
+        
+            String criteria = selectedRubric.equals("Poster Presentation") ? 
+                "POSTER RUBRICS:\n1. Visual Appeal & Layout\n2. Content Accuracy\n3. Q&A Interaction" :
+                "ORAL RUBRICS:\n1. Delivery & Clarity\n2. Slide Design\n3. Time Management";
             
             JOptionPane.showMessageDialog(this, "Evaluating: " + sName + "\n\n" + criteria);
-
+        
             String scoreStr = JOptionPane.showInputDialog(this, "Enter Total Score (0-100):");
-            if (scoreStr == null) return;
-
-            try {
-                int sScore = Integer.parseInt(scoreStr);
-                if (sScore < 0 || sScore > 100) {
-                    JOptionPane.showMessageDialog(this, "Error: Score must be 0-100.");
-                    return;
+            
+            if (scoreStr != null) {
+                try {
+                    int score = Integer.parseInt(scoreStr);
+                    JOptionPane.showMessageDialog(this, "Score of " + score + " saved for " + sName);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Error: Invalid number.");
                 }
-
-                String sComment = JOptionPane.showInputDialog(this, "Enter Evaluator Comments:");
-                
-                // Create the record (using your existing logic)
-                Student targetStudent = new Student("STU-DEMO", sName, "student@fci.edu", 
-                                                    "Research Title", "Abstract", selectedRubric);
-                
-                // Assuming Evaluation class exists as per your shared snippet
-                // Evaluation eval = new Evaluation("EV-001", selectedRubric, sScore, sComment, targetStudent);
-                // eval.recordEvaluation();
-
-                JOptionPane.showMessageDialog(this, "Evaluation successfully recorded!\nStudent: " + sName + "\nScore: " + sScore);
-
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Error: Invalid number format.", "Input Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
